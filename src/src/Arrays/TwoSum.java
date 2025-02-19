@@ -2,6 +2,7 @@ package Arrays;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class TwoSum {
 public static void main(String[] args){
@@ -15,9 +16,18 @@ public static void main(String[] args){
 
     int[] nums = {2,7,11,15};
     int target = 9;
-    System.out.println(Arrays.toString(twoSum(nums,target)));
+  //System.out.println(Arrays.toString(twoSum(nums,target)));
+    System.out.println(Arrays.toString(twoSumOptimized(nums,target)));
 
 }
+
+    /**
+     * twoSum using Brute force approach
+     * time complexity of O(n^2)
+     * @param nums
+     * @param target
+     * @return
+     */
     public static int[] twoSum(int[] nums,int target){
         int[] indices = new int[2];
 
@@ -34,5 +44,37 @@ public static void main(String[] args){
 
     }
         return indices;
+    }
+
+    /**
+     * twoSumOptimized method using HashMap
+     * Time complexity: O(n)
+     * Space complexity: O(n), since we are storing up to n elements in the hash map.
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int[] twoSumOptimized(int[] nums, int target) {
+        // HashMap to store the numbers and their indices
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        // Iterate through the array
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+
+            // Check if the complement exists in the map
+            if (map.containsKey(complement)) {
+                System.out.println("inside if i is "+ i +" "+map.get(complement));
+                // If it exists, return the indices of the two numbers
+                return new int[] { map.get(complement), i };
+            }
+
+            // If not, add the current number and its index to the map
+            map.put(nums[i], i);
+            System.out.println("inside else i is "+ i +" "+map);
+        }
+
+        // Return an empty array if no solution is found (though the problem guarantees one solution)
+        return new int[] {};
     }
 }
